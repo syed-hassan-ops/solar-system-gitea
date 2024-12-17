@@ -14,8 +14,7 @@ pipeline{
             parallel{
                 stage("NPM TEST"){
                     steps{
-                        sh "npm audit --audit-level=critical"
-                        echo $?
+                        sh "npm audit --audit-level=critical && echo $?"
                     }
                 }
                 stage("OWASP Dependency Check"){
