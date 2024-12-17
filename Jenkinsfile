@@ -37,6 +37,11 @@ pipeline{
                 }
             }
         }
+        stage("NPM Test"){
+            steps{
+                sh "npm test"
+            }
+        }
         stage("Reports & Tests"){
             steps{
 
