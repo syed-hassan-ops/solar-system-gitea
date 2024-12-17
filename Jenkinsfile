@@ -14,11 +14,10 @@ pipeline{
             parallel{
                 stage("NPM TEST"){
                     steps{
-                        sh '''
-                            npm audit --audit-level=critical  
-                            npm audit fix --force
-                            echo $?
-                        '''
+                        sh "npm audit --audit-level=critical"
+                        sh "npm audit fix --force"  
+                            
+                        
                     }
                 }
                 stage("OWASP Dependency Check"){
