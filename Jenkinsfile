@@ -1,5 +1,8 @@
 pipeline{
     agent any 
+    environment {
+        SCANNER = tool "sonar-scanner"
+    }
     tools{
         nodejs 'node23'
     }
@@ -20,6 +23,23 @@ pipeline{
                     --prettyPrint''', odcInstallation: 'OWASP_DC'
                         
                 dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
+            }
+        }
+        stage("Code Analysis"){
+            steps{
+                withSonarQubeEnv('sonarqube-scanner') {
+                    sh """
+                    "${SCANNER}/bin/sonar-scanner" \
+                    -Dsonar.projectName=Solar-System-App \
+                    -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
+                    -Dsonar.organization=DevSecOps-silver 
+                    """
+                }
+            }
+        }
+        stage("Reports & Tests"){
+            steps{
+
             }
         }
     }
