@@ -4,9 +4,9 @@ pipeline{
         nodejs 'node18'
     }
     stages{
-        stage('Node Test'){
+        stage('Node package Install'){
             steps{
-                sh "node -v && npm -v"
+                sh "npm install --no-audit"
 
             }
         }
