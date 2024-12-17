@@ -14,16 +14,21 @@ pipeline{
             parallel{
                 stage("NPM TEST"){
                     steps{
-                        sh """
-                        npm audit --audit-level=critical  
-                        echo $?"""
+                        sh '''
+                            npm audit --audit-level=critical  
+                            echo $?
+                        '''
                     }
                 }
                 stage("OWASP Dependency Check"){
                     steps{
-                        dependencyCheck additionalArguments: '''--scan \'./\'
+                        dependencyCheck additionalArguments: '''
+                            --scan \'./\'
+                            --out \'./\'  
                             --format \'ALL\'
-                            prettyPrint''', odcInstallation: 'OWASP_DC'
+                            --prettyPrint''', odcInstallation: 'OWASP_DC'
+                        
+                        dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: false
                         
                     }
                 }
