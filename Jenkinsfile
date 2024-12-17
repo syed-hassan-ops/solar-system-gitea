@@ -1,7 +1,7 @@
 pipeline{
     agent any 
     environment {
-        SCANNER = tool "sonar-scanner"
+        SCANNER = tool 'sonar-scanner'
     }
     tools{
         nodejs 'node23'
@@ -32,7 +32,7 @@ pipeline{
                     "${SCANNER}/bin/sonar-scanner" \
                     -Dsonar.projectName=Solar-System-App \
                     -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
-                    -Dsonar.organization=DevSecOps-silver 
+                    -Dsonar.organization=syed-hassan-ops-netflix
                     """
                 }
             }
