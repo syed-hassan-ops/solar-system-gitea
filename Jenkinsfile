@@ -40,6 +40,9 @@ pipeline{
         stage("Reports & Tests"){
             steps{
 
+                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+                junit stdioRetention: '', testResults: 'dependency-check-junit.xml'
             }
         }
     }
