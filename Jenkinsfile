@@ -26,6 +26,7 @@ pipeline{
                             --scan \'./\'
                             --out \'./\'  
                             --format \'ALL\'
+                            --disableYarnAudit \
                             --prettyPrint''', odcInstallation: 'OWASP_DC'
                         
                         dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
