@@ -14,8 +14,6 @@ app.use(express.static(path.join(__dirname, '/')));
 app.use(cors())
 
 mongoose.connect('mongodb://localhost:27017/test', {
-    user: 'root',
-    pass: 'example',
     useNewUrlParser: true,
     useUnifiedTopology: true
 }, function(err) {
