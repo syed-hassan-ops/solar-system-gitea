@@ -1,11 +1,11 @@
 pipeline{
     agent any 
-    tools{
+    tool{
         nodejs 'node18'
     }
     stages{
         stage('Node Test'){
-            step{
+            steps{
                 sh "node -v && npm -v"
 
             }
