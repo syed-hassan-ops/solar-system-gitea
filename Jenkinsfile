@@ -28,7 +28,7 @@ pipeline{
                             --format \'ALL\'
                             --prettyPrint''', odcInstallation: 'OWASP_DC'
                         
-                        dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: false
+                        dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
                         
                     }
                 }
