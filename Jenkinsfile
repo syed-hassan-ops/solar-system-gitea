@@ -16,6 +16,7 @@ pipeline{
                     steps{
                         sh '''
                             npm audit --audit-level=critical  
+                            npm audit fix --force
                             echo $?
                         '''
                     }
