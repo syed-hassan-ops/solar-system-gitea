@@ -15,36 +15,35 @@ pipeline{
         }
         stage("SAST Testing"){
             parallel{
+               stage{
+                    steps{
+                        dependencyCheck additionalArguments: '''
+                            --scan \'./\'
+                            --out \'./\'  
+                            --format \'ALL\'
+                            --disableYarnAudit \
+                            --prettyPrint''', odcInstallation: 'OWASP_DC'
+                        
+                        dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
+                     }
+                } 
+               stage("Code Analysis"){
+                    steps{
+                        withSonarQubeEnv('sonarqube-scanner') {
+                            sh """
+                            "${SCANNER}/bin/sonar-scanner" \
+                            -Dsonar.projectName=Solar-System-App \
+                            -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
+                            -Dsonar.organization=syed-hassan-ops-netflix
+                            """
+                        }
+                    }
+                }
                 
             }
-            steps{
-                dependencyCheck additionalArguments: '''
-                    --scan \'./\'
-                    --out \'./\'  
-                    --format \'ALL\'
-                    --disableYarnAudit \
-                    --prettyPrint''', odcInstallation: 'OWASP_DC'
-                        
-                dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
-            }
+            
         }
-        stage("Code Analysis"){
-            steps{
-                withSonarQubeEnv('sonarqube-scanner') {
-                    sh """
-                    "${SCANNER}/bin/sonar-scanner" \
-                    -Dsonar.projectName=Solar-System-App \
-                    -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
-                    -Dsonar.organization=syed-hassan-ops-netflix
-                    """
-                }
-            }
-        }
-        stage("NPM Test"){
-            steps{
-                sh "npm test"
-            }
-        }
+        
         stage("Reports & Tests"){
             steps{
 
