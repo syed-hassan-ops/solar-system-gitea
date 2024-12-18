@@ -13,21 +13,21 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 app.use(cors())
 
-// const mongoose = require('mongoose');
 
 // MongoDB URI for local connection (without username and password)
-const dbUri = 'mongodb://localhost:27017/test';  // Replace 'test' with your database name
 
-mongoose.connect(dbUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-}, function(err) {
-    if (err) {
-        console.log("Error: " + err);
-    } else {
+const connectToDatabase = async () => {
+    try {
+        const dbUri = 'mongodb://localhost:27017/test'; // Replace 'test' with your database name
+        await mongoose.connect(dbUri, {
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        });
         console.log("MongoDB Connection Successful");
+    } catch (err) {
+        console.error("Error: " + err);
     }
-});
+};
 
 var Schema = mongoose.Schema;
 
