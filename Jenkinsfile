@@ -13,9 +13,9 @@ pipeline{
 
             }
         }
-        stage("SAST Testing"){
+        stage("SAST CODE & DEPENDECY"){
             parallel{
-               stage{
+                stage("SAST Testing"){
                     steps{
                         dependencyCheck additionalArguments: '''
                             --scan \'./\'
@@ -23,11 +23,11 @@ pipeline{
                             --format \'ALL\'
                             --disableYarnAudit \
                             --prettyPrint''', odcInstallation: 'OWASP_DC'
-                        
+                                
                         dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
-                     }
-                } 
-               stage("Code Analysis"){
+                    }
+                }
+                stage("Code Analysis"){
                     steps{
                         withSonarQubeEnv('sonarqube-scanner') {
                             sh """
@@ -39,11 +39,8 @@ pipeline{
                         }
                     }
                 }
-                
             }
-            
         }
-        
         stage("Reports & Tests"){
             steps{
 
