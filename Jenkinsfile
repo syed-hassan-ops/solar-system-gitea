@@ -36,6 +36,7 @@ pipeline{
                             "${SCANNER}/bin/sonar-scanner" \
                             -Dsonar.sources=./ \
                             -Dsonar.projectName=Solar-System-App \
+                            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
                             -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
                             -Dsonar.organization=syed-hassan-ops-netflix
                             """
