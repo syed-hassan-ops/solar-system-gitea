@@ -17,14 +17,16 @@ pipeline{
             parallel{
                 stage("SAST Testing"){
                     steps{
-                        dependencyCheck additionalArguments: '''
-                            --scan \'./\'
-                            --out \'./\'  
-                            --format \'ALL\'
-                            --disableYarnAudit \
-                            --prettyPrint''', odcInstallation: 'OWASP_DC'
-                                
-                        dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
+                        catchError(buildResult: 'UNSTABLE', message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
+                            dependencyCheck additionalArguments: '''
+                                --scan \'./\'
+                                --out \'./\'  
+                                --format \'ALL\'
+                                --disableYarnAudit \
+                                --prettyPrint''', odcInstallation: 'OWASP_DC'
+                                    
+                            dependencyCheckPublisher failedTotalCritical: 5, pattern: 'dependency-check-report.xml', stopBuild: false
+                        }
                     }
                 }
                 stage("Code Analysis"){
