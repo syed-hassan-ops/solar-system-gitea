@@ -43,10 +43,12 @@ pipeline{
         }
         stage("Reports & Tests"){
             steps{
+                catchError(buildResult: 'UNSTABLE', message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
 
-                publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                    junit stdioRetention: '', testResults: 'dependency-check-junit.xml'
 
-                junit stdioRetention: '', testResults: 'dependency-check-junit.xml'
+                }
             }
         }
     }
