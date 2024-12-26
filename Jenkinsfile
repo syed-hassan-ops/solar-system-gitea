@@ -34,6 +34,7 @@ pipeline{
                         withSonarQubeEnv('sonarqube-scanner') {
                             sh """
                             "${SCANNER}/bin/sonar-scanner" \
+                            -Dsonar.sources=./ \
                             -Dsonar.projectName=Solar-System-App \
                             -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
                             -Dsonar.organization=syed-hassan-ops-netflix
