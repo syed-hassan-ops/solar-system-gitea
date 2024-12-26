@@ -47,7 +47,7 @@ pipeline{
                         catchError(message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
                         
                             sh """
-                            sh npm run coverage
+                              npm run coverage
                             """
                         }
                     }
