@@ -42,6 +42,16 @@ pipeline{
                         }
                     }
                 }
+                stage("Code Coverage"){
+                    steps{
+                        catchError(message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
+                        
+                            sh """
+                            sh npm run coverage
+                            """
+                        }
+                    }
+                }
             }
         }
         stage("Reports & Tests"){
