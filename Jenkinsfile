@@ -41,6 +41,7 @@ pipeline{
                             -Dsonar.organization=syed-hassan-ops-netflix
                             """
                         }
+                        waitForQualityGate abortPipeline: true
                     }
                 }
                 stage("Code Coverage"){
