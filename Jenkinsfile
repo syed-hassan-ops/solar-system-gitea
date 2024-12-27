@@ -61,9 +61,9 @@ pipeline{
         stage("Trivy Image Scan"){
             steps{
                 sh """
-                trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:$BUILD_NUMBER --format json -o trivy-modrate-vul.json
+                trivy image  --severity  LOW,MEDIUM,HIGH  markmama/solar-app:$BUILD_NUMBER --format json -o trivy-modrate-vul.json
 
-                trivy image  --severity  CRITICAL  solar-app:$BUILD_NUMBER --format json -o trivy-critical-vul.json
+                trivy image  --severity  CRITICAL  markmama/solar-app:$BUILD_NUMBER --format json -o trivy-critical-vul.json
 
                 """
             }
