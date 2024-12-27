@@ -71,8 +71,8 @@ pipeline{
                         trivy convert -f template -t /usr/local/share/trivy/templates/html.tpl -o trivy-critical-vul.html trivy-critical-vul.json
                         trivy convert -f template -t /usr/local/share/trivy/templates/html.tpl -o trivy-modrate-vul.html trivy-modrate-vul.json
 
-                        trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-critical-vul.html trivy-critical-vul.json
-                        trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-modrate-vul.html trivy-modrate-vul.json
+                        trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-critical-vul.xml trivy-critical-vul.json
+                        trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-modrate-vul.xml trivy-modrate-vul.json
                         """
                     }
             }
@@ -80,10 +80,13 @@ pipeline{
         stage("Reports & Tests"){
             steps{
                 catchError(buildResult: 'UNSTABLE', message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
-                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Deoendency Report', reportTitles: '', useWrapperFileDirectly: true])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'trivy-critical-vul.html', reportName: 'Trivy Critical Report', reportTitles: '', useWrapperFileDirectly: true])
+                    publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'trivy-modrate-vul.html', reportName: 'Trivy Moderate Report', reportTitles: '', useWrapperFileDirectly: true])
 
                     junit stdioRetention: '', testResults: 'dependency-check-junit.xml'
-
+                    junit stdioRetention: '', testResults: 'trivy-critical-vul.xml'
+                    junit stdioRetention: '', testResults: 'trivy-modrate-vul.xml'
                 }
             }
         }
