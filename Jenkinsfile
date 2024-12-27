@@ -52,9 +52,10 @@ pipeline{
         }
         stage("Docker Build and Push"){
             steps{
-                image = docker.build("markmama/solar-app:$BUILD_NUMBER")
+                
+                def image = docker.build("markmama/solar-app:$BUILD_NUMBER")
 
-                withDockerRegistry(credentialsId: 'docker_registry ') {
+                withDockerRegistry(credentialsId: 'docker_registry', url: "") {
                     image.push()
                 }
 
