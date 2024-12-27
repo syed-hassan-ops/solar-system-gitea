@@ -50,12 +50,17 @@ pipeline{
                 }
             }
         }
-        stage("Docker Build and Push"){
+        stage("Docker Build"){
             steps{
                 script{
                     def image = docker.build("markmama/solar-app:$BUILD_NUMBER")
 
                 }
+            }
+        }
+        stage("Docker Push"){
+            docker.withRegistry("https://registry.hub.docker.com","docker_registry"){
+                image.push()
             }
         }
         stage("Trivy Image Scan"){
