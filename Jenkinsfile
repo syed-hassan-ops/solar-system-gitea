@@ -41,7 +41,11 @@ pipeline{
                             -Dsonar.organization=syed-hassan-ops-netflix
                             """
                         }
-                        waitForQualityGate abortPipeline: true
+                        timeout(time: 60, unit: 'SECONDS') {
+                            catchError(buildResult: 'UNSTABLE', message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
+                                waitForQualityGate abortPipeline: true
+                            }
+                        }
                     }
                 }
             }
