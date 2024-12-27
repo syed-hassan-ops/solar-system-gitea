@@ -59,9 +59,13 @@ pipeline{
             }
         }
         stage("Docker Push"){
-            docker.withRegistry("https://registry.hub.docker.com","docker_registry"){
-                image.push()
+            script{
+                docker.withRegistry("https://registry.hub.docker.com","docker_registry"){
+                    image.push()
+                }
+
             }
+            
         }
         stage("Trivy Image Scan"){
             steps{
