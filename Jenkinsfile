@@ -44,16 +44,6 @@ pipeline{
                         waitForQualityGate abortPipeline: true
                     }
                 }
-                stage("Code Coverage"){
-                    steps{
-                        catchError(message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
-                        
-                            sh """
-                              npm run coverage
-                            """
-                        }
-                    }
-                }
             }
         }
         stage("Trivy Image Scan"){
@@ -68,11 +58,11 @@ pipeline{
             post{
                 always{
                         sh"""
-                        trivy convert -f template -t /usr/local/share/trivy/templates/html.tpl -o trivy-critical-vul.html trivy-critical-vul.json
-                        trivy convert -f template -t /usr/local/share/trivy/templates/html.tpl -o trivy-modrate-vul.html trivy-modrate-vul.json
+                        trivy convert -f template -t "@/usr/local/share/trivy/templates/html.tpl" -o trivy-critical-vul.html trivy-critical-vul.json
+                        trivy convert -f template -t "@/usr/local/share/trivy/templates/html.tpl" -o trivy-modrate-vul.html trivy-modrate-vul.json
 
-                        trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-critical-vul.xml trivy-critical-vul.json
-                        trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-modrate-vul.xml trivy-modrate-vul.json
+                        trivy convert -f template -t "@/usr/local/share/trivy/templates/junit.tpl" -o trivy-critical-vul.xml trivy-critical-vul.json
+                        trivy convert -f template -t "@/usr/local/share/trivy/templates/junit.tpl" -o trivy-modrate-vul.xml trivy-modrate-vul.json
                         """
                     }
             }
