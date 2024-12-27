@@ -52,13 +52,13 @@ pipeline{
         }
         stage("Docker Build and Push"){
             steps{
-                
-                def image = docker.build("markmama/solar-app:$BUILD_NUMBER")
+                script{
+                    def image = docker.build("markmama/solar-app:$BUILD_NUMBER")
 
-                withDockerRegistry(credentialsId: 'docker_registry', url: "") {
-                    image.push()
+                    withDockerRegistry(credentialsId: 'docker_registry', url: "") {
+                        image.push()
+                    }
                 }
-
             }
         }
         stage("Trivy Image Scan"){
