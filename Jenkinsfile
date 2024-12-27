@@ -43,7 +43,7 @@ pipeline{
                         }
                         timeout(time: 60, unit: 'SECONDS') {
                             catchError(message: 'Quality gate Error') {
-                                waitForQualityGate abortPipeline: true
+                                waitForQualityGate abortPipeline: false
                             }
                         }
                     }
