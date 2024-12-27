@@ -54,19 +54,19 @@ pipeline{
                         }
                     }
                 }
-                stage("Image Scan Trivy"){
-                    steps{
-                        sh """
-                            trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:0.1 --format json -o trivy-modrate-vul.json
+            }
+        }
+        stage("Trivy Image Scan"){
+            steps{
+                sh """
+                trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:0.1 --format json -o trivy-modrate-vul.json
 
+                trivy image  --severity  CRITICAL  solar-app:0.1 --format json -o trivy-critical-vul.json
 
-                            trivy image  --severity  CRITICAL  solar-app:0.1 --format json -o trivy-critical-vul.json
-
-                        """
-                    }
-                }
-                post{
-                    always{
+                """
+            }
+            post{
+                always{
                         sh"""
                         trivy convert -f template -t /usr/local/share/trivy/templates/html.tpl -o trivy-critical-vul.html trivy-critical-vul.json
                         trivy convert -f template -t /usr/local/share/trivy/templates/html.tpl -o trivy-modrate-vul.html trivy-modrate-vul.json
@@ -75,7 +75,6 @@ pipeline{
                         trivy convert -f template -t /usr/local/share/trivy/templates/junit.tpl -o trivy-modrate-vul.html trivy-modrate-vul.json
                         """
                     }
-                }
             }
         }
         stage("Reports & Tests"){
