@@ -55,7 +55,7 @@ pipeline{
                 script{
                     def image = docker.build("markmama/solar-app:$BUILD_NUMBER")
 
-                    withDockerRegistry(credentialsId: 'docker_registry', url: "") {
+                    withDockerRegistry(credentialsId: 'docker_registry', url: "https://hub.docker.com/repository") {
                         image.push()
                     }
                 }
