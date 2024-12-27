@@ -50,12 +50,22 @@ pipeline{
                 }
             }
         }
+        stage("Docker Build and Push"){
+            steps{
+                image = docker.build("markmama/solar-app:$BUILD_NUMBER")
+
+                withDockerRegistry(credentialsId: 'docker_registry ') {
+                    image.push()
+                }
+
+            }
+        }
         stage("Trivy Image Scan"){
             steps{
                 sh """
-                trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:0.1 --format json -o trivy-modrate-vul.json
+                trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:$BUILD_NUMBER --format json -o trivy-modrate-vul.json
 
-                trivy image  --severity  CRITICAL  solar-app:0.1 --format json -o trivy-critical-vul.json
+                trivy image  --severity  CRITICAL  solar-app:$BUILD_NUMBER --format json -o trivy-critical-vul.json
 
                 """
             }
