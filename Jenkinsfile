@@ -54,17 +54,12 @@ pipeline{
             steps{
                 script{
                     def image = docker.build("markmama/solar-app:$BUILD_NUMBER")
+
+                    withDockerRegistry([credentialsId: 'docker_registry', url: 'https://index.docker.io/v1/']) {
+                        image.push()
+                    }  
                 }
             }
-        }
-        stage("Docker Push"){
-            script{
-                withDockerRegistry([credentialsId: 'docker_registry', url: 'https://index.docker.io/v1/']) {
-                    image.push()
-                 }   
-
-            }
-            
         }
         stage("Trivy Image Scan"){
             steps{
