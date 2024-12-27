@@ -73,7 +73,7 @@ pipeline{
         }
         stage("Reports & Tests"){
             steps{
-                catchError(buildResult: 'UNSTABLE', message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
+                catchError(message: 'Quality gate Error') {
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Deoendency Report', reportTitles: '', useWrapperFileDirectly: true])
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'trivy-critical-vul.html', reportName: 'Trivy Critical Report', reportTitles: '', useWrapperFileDirectly: true])
                     publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, reportDir: './', reportFiles: 'trivy-modrate-vul.html', reportName: 'Trivy Moderate Report', reportTitles: '', useWrapperFileDirectly: true])
