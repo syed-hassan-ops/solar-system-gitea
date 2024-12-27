@@ -59,7 +59,7 @@ pipeline{
         }
         stage("Docker Push"){
             script{
-                docker.withRegistry("https://hub.docker.com/repository/", "docker_registry"){
+                withDockerRegistry([credentialsId: 'docker_registry', url: 'https://index.docker.io/v1/']) {
                     image.push()
                  }   
 
