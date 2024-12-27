@@ -1,17 +1,10 @@
-FROM node:18-alpine3.17
+FROM node:23.5.0-slim
 
-WORKDIR /usr/app
+RUN mkdir -p /app
 
-COPY package*.json /usr/app/
+COPY . /app
 
-RUN npm install
+WORKDIR /app
 
-COPY . .
-
-ENV MONGO_URI=uriPlaceholder
-ENV MONGO_USERNAME=usernamePlaceholder
-ENV MONGO_PASSWORD=passwordPlaceholder
-
-EXPOSE 3000
-
-CMD [ "npm", "start" ]
+RUN npm install 
+ENTRYPOINT [ "npm run start" ]
