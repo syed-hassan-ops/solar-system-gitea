@@ -42,7 +42,7 @@ pipeline{
                             """
                         }
                         timeout(time: 60, unit: 'SECONDS') {
-                            catchError(buildResult: 'UNSTABLE', message: 'Test Result Made this Unstable No worriers we can continue this Pipeline') {
+                            catchError(message: 'Quality gate Error') {
                                 waitForQualityGate abortPipeline: true
                             }
                         }
