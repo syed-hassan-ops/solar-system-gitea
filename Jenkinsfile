@@ -55,13 +55,15 @@ pipeline{
                     }
                 }
                 stage("Image Scan Trivy"){
-                    sh """
-                        trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:0.1 --format json -o trivy-modrate-vul.json
+                    steps{
+                        sh """
+                            trivy image  --severity  LOW,MEDIUM,HIGH  solar-app:0.1 --format json -o trivy-modrate-vul.json
 
 
-                        trivy image  --severity  CRITICAL  solar-app:0.1 --format json -o trivy-critical-vul.json
+                            trivy image  --severity  CRITICAL  solar-app:0.1 --format json -o trivy-critical-vul.json
 
-                    """
+                        """
+                    }
                 }
                 post{
                     always{
