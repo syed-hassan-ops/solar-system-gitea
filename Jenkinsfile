@@ -82,6 +82,15 @@ pipeline{
                     }
             }
         }
+        stage("ArgoCD K8 Config Update"){
+            when{
+                branch 'PR*'
+            }
+            steps{
+                sh " git clone https://github.com/syed-hassan-ops/solar-system-gitea.git"
+                dir(Kube file)
+            }
+        }
         stage("Reports & Tests"){
             steps{
                 catchError(message: 'Quality gate Error') {
