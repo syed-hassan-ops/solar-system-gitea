@@ -54,6 +54,7 @@ pipeline{
             steps{
                 script{
                     image = docker.build("markmama/solar-app:$BUILD_NUMBER")
+                    echo "Branch name: ${env.BRANCH_NAME}"
 
                     withDockerRegistry(credentialsId: 'dockerreg', url: '') {
                         image.push()
