@@ -87,12 +87,16 @@ pipeline{
                 branch 'PR*'
             }
             steps{
-                sh " git clone https://github.com/syed-hassan-ops/solar-system-gitea.git"
+                sh "git clone https://github.com/syed-hassan-ops/solar-system-gitea.git"
                 dir("solar-system-gitea"){
-                    sh """
+                    script{
+                         sh """
                         helm upgrade --install  solar-app -n sola-app --set image.tag=$$BUILD_NUMBER ./helmchart/solar-app/
 
-                    """
+                        """
+
+                    }
+                   
                 }
             }
         }
