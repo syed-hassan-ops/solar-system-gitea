@@ -84,7 +84,7 @@ pipeline{
         }
         stage("ArgoCD K8 Config Update"){
             when{
-                branch 'PR*'
+                branch 'main'
             }
             steps{
                 sh "git clone https://github.com/syed-hassan-ops/solar-system-gitea.git"
