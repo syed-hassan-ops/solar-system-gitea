@@ -91,7 +91,10 @@ pipeline{
                 sh "git clone https://github.com/syed-hassan-ops/solar-system-gitea.git"
                 dir("solar-system-gitea"){
                     script{
-                         sh "helm upgrade --install  solar-app -n sola-app --set image.tag=$BUILD_NUMBER ./helmchart/solar-app/"
+                        withEnv(["KUBECONFIG=/var/lib/jenkins/.minikube/config"]) {
+                            sh "helm upgrade --install  solar-app -n sola-app --set image.tag=$BUILD_NUMBER ./helmchart/solar-app/"
+                        }
+                         
                     }
                    
                 }
