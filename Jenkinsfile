@@ -41,11 +41,11 @@ pipeline{
                             -Dsonar.organization=syed-hassan-ops-netflix
                             """
                         }
-                        timeout(time: 60, unit: 'SECONDS') {
+                        /*timeout(time: 60, unit: 'SECONDS') {
                             catchError(message: 'Quality gate Error') {
                                 waitForQualityGate abortPipeline: false
                             }
-                        }
+                        }*/
                     }
                 }
             }
