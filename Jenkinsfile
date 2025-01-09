@@ -91,7 +91,7 @@ pipeline{
                 dir("solar-system-gitea"){
                     script{
                          sh """
-                        helm upgrade --install  solar-app -n sola-app --set image.tag=$$BUILD_NUMBER ./helmchart/solar-app/
+                        helm upgrade --install  solar-app -n sola-app --set image.tag='$$BUILD_NUMBER' ./helmchart/solar-app/
 
                         """
 
