@@ -117,8 +117,8 @@ pipeline{
     post {
         always {
             script {
-                if (fileExists('solar-system-gitops-argocd')) {
-                    sh 'rm -rf solar-system-gitops-argocd'
+                if (fileExists('solar-system-gitea')) {
+                    sh 'rm -rf solar-system-gitea'
                 }
             }
         }
