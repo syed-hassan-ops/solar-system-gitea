@@ -85,7 +85,7 @@ pipeline{
         }
         stage("Helm Chart K8 Config Update"){
             when{
-                branch '*main*'
+                branch 'main'
             }
             steps{
                 sh "git clone https://github.com/syed-hassan-ops/solar-system-gitea.git"
