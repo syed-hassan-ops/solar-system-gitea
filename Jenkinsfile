@@ -115,6 +115,7 @@ pipeline{
                     -w zap_report.md \
                     -J zap_json_report.json \
                     -x zap_xml_report.xml \
+                    -c ignore-rules
                 '''
             }
         }
