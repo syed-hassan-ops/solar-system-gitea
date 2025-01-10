@@ -108,7 +108,7 @@ pipeline{
                 sh '''
                     #### REPLACE below with Kubernetes http://192.168.49.2:30012/api-docs/ #####
                     chmod 777 $(pwd)
-                    docker run -v $(pwd):/zap/wrk/:rw --network="host" ghcr.io/zaproxy/zaproxy zap-api-scan.py \
+                    docker run -v $(pwd):/zap/wrk/:rw --network=minikube ghcr.io/zaproxy/zaproxy zap-api-scan.py \
                     -t http://192.168.49.2:30012/api-docs/ \
                     -f openapi \
                     -r zap_report.html \
