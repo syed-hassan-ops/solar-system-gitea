@@ -31,21 +31,23 @@ pipeline{
                 }
                 stage("Code Analysis"){
                     steps{
-                        withSonarQubeEnv('sonarqube-scanner') {
-                            sh """
-                            "${SCANNER}/bin/sonar-scanner" \
-                            -Dsonar.sources=./ \
-                            -Dsonar.projectName=Solar-System-App \
-                            -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
-                            -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
-                            -Dsonar.organization=syed-hassan-ops-netflix
-                            """
-                        }
-                        /*timeout(time: 60, unit: 'SECONDS') {
-                            catchError(message: 'Quality gate Error') {
-                                waitForQualityGate abortPipeline: false
+                        catchError(message: 'QualityGate Error') {
+                            withSonarQubeEnv('sonarqube-scanner') {
+                                sh """
+                                "${SCANNER}/bin/sonar-scanner" \
+                                -Dsonar.sources=./ \
+                                -Dsonar.projectName=Solar-System-App \
+                                -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info \
+                                -Dsonar.projectKey=syed-hassan-ops-netflix_solar-system-app \
+                                -Dsonar.organization=syed-hassan-ops-netflix
+                                """
                             }
-                        }*/
+                            /*timeout(time: 60, unit: 'SECONDS') {
+                                catchError(message: 'Quality gate Error') {
+                                    waitForQualityGate abortPipeline: false
+                                }
+                            }*/
+                        }
                     }
                 }
             }
