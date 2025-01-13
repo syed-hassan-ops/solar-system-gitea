@@ -127,7 +127,7 @@ pipeline{
                     sh """
                         mkdir report-$BUILD_NUMBER
                         cp dependency-check-jenkins*.* trivy-critical-vul*.* trivy-modrate-vul*.* zap_report.html ./report-$BUILD_NUMBER/
-                        ll ./report-$BUILD_NUMBER/
+                        ls ./report-$BUILD_NUMBER/
                     """
 
                     s3Upload acl: 'Private', bucket: 'solar-app-jenkins-report', cacheControl: '', excludePathPattern: '', file: 'report-$BUILD_NUMBER', includePathPattern: '', metadatas: [''], path: 'jenkins-report-$BUILD_NUMBER', redirectLocation: '', sseAlgorithm: '', tags: '', text: '', workingDir: ''
