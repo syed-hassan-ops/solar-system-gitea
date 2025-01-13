@@ -121,6 +121,17 @@ pipeline{
                 '''
             }
         }
+        stage("Report-Report"){
+            withAWS(credentials: 'aws-ec2-s3-access', region: 'ap-south-1') {
+                sh """
+                    mkdir report-$BUILD_NUMBER
+                    cp dependency* trivy* zap_report * ./report-$BUILD_NUMBER/
+                    ll ./report-$BUILD_NUMBER/
+                """
+
+                s3Upload acl: 'Private', bucket: 'solar-app-jenkins-report', cacheControl: '', excludePathPattern: '', file: 'report-$BUILD_NUMBER', includePathPattern: '', metadatas: [''], path: 'jenkins-report-$BUILD_NUMBER', redirectLocation: '', sseAlgorithm: '', tags: '', text: '', workingDir: ''
+            }
+        }
         stage("Reports & Tests"){
             steps{
                 catchError(message: 'Quality gate Error') {
