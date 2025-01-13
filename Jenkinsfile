@@ -137,7 +137,7 @@ pipeline{
         stage("Production Deploy"){
             steps{
                 timeout(time: 1, unit: 'DAYS') {
-                    input message 'Production Rollout', ok 'Deploy to Production', submitter 'admin'
+                    input message: 'Deploy to Production?', ok: 'YES! Let us try this on Production', submitter: 'admin'
                 }
         }
 
