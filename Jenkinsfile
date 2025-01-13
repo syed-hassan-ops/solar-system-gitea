@@ -134,6 +134,17 @@ pipeline{
                 }
             }
         }
+        stage("Production Deploy"){
+            steps{
+                input {
+                    message 'Production Rollout'
+                    ok 'Deploy to Production'
+                    submitter 'admin'
+                }
+
+            }
+        }
+
         stage("Reports & Tests"){
             steps{
                 catchError(message: 'Quality gate Error') {
