@@ -126,7 +126,7 @@ pipeline{
                 withAWS(credentials: 'aws-ec2-s3-access', region: 'ap-south-1') {
                     sh """
                         mkdir report-$BUILD_NUMBER
-                        cp dependency-check-jenkins*.* trivy-critical-vul*.* trivy-modrate-vul*.* zap_report*.* ./report-$BUILD_NUMBER/
+                        cp dependency-check-jenkins*.* trivy-critical-vul*.* trivy-modrate-vul*.* zap_report.html ./report-$BUILD_NUMBER/
                         ll ./report-$BUILD_NUMBER/
                     """
 
