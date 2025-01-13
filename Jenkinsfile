@@ -136,13 +136,9 @@ pipeline{
         }
         stage("Production Deploy"){
             steps{
-                input {
-                    message 'Production Rollout',
-                    ok 'Deploy to Production',
-                    submitter 'admin'
+                timeout(time: 1, unit: 'DAYS') {
+                    input message 'Production Rollout', ok 'Deploy to Production', submitter 'admin'
                 }
-
-            }
         }
 
         stage("Reports & Tests"){
