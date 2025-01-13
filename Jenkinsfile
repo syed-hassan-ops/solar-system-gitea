@@ -137,8 +137,8 @@ pipeline{
         stage("Production Deploy"){
             steps{
                 input {
-                    message 'Production Rollout'
-                    ok 'Deploy to Production'
+                    message 'Production Rollout',
+                    ok 'Deploy to Production',
                     submitter 'admin'
                 }
 
