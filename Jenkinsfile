@@ -129,8 +129,7 @@ pipeline{
                         cp dependency-check-jenkins*.* trivy-critical-vul*.* trivy-modrate-vul*.* zap_report.html ./report-$BUILD_NUMBER/
                         ls ./report-$BUILD_NUMBER/
                     """
-
-                    s3Upload acl: 'Private', bucket: 'solar-app-jenkins-report', cacheControl: '', excludePathPattern: '', file: 'report-$BUILD_NUMBER', includePathPattern: '', metadatas: [''], path: 'jenkins-report-$BUILD_NUMBER', redirectLocation: '', sseAlgorithm: '', tags: '', text: '', workingDir: ''
+                    s3Upload(file:"report-$BUILD_NUMBER", bucket:'olar-app-jenkins-report', path:"jenkins-report-$BUILD_NUMBER")
                 }
             }
         }
