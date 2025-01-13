@@ -164,7 +164,9 @@ pipeline{
             script {
                 if (fileExists('solar-system-gitea')) {
                     sh 'rm -rf solar-system-gitea'
+                    sh 'rm -rf report*'
                 }
+                
             }
         }
     }
