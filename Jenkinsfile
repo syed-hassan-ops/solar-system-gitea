@@ -165,7 +165,6 @@ pipeline{
                     sh 'rm -rf solar-system-gitea'
                     sh 'rm -rf report*'
                 }
-                
             }
         }
     }
